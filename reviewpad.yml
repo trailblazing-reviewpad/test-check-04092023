@@ -1,0 +1,26 @@
+checks:
+  stale:
+    parameters:
+      max-idle-days: -1
+    severity: high
+    activation: on
+
+  large:
+    parameters:
+      max-lines: -1
+    severity: medium
+    label: my-large
+    activation: on
+
+  long-lived:
+    parameters:
+      max-days: -1
+    severity: high
+    activation: on
+
+workflows:
+  - name: handle-stale-pr
+    trigger-on-check: stale
+    run:
+      - $addLabel("my-stale-label")
+      - $addComment("This Pull Request has been inactive for over 30 days. Please address this.")
